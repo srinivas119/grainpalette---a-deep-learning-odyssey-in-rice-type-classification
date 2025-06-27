@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rice Type Classification - Upload</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      background-color: #000;
+      padding: 20px 40px;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8em;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #00c853;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 40px;
+      background: #fff;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input[type="file"] {
+      margin: 20px 0;
+      padding: 10px;
+    }
+
+    button {
+      background-color: #00c853;
+      color: white;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #009624;
+    }
+
+    .footer {
+      background: #111;
+      color: #aaa;
+      text-align: center;
+      padding: 30px 0;
+      margin-top: 80px;
+    }
+
+    .breadcrumb {
+      font-size: 0.9em;
+      margin-top: -30px;
+      margin-bottom: 40px;
+      color: #666;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-weight: bold;
+      color: #00695c;
+      font-size: 1.2em;
+    }
+
+    img#preview {
+      max-width: 300px;
+      margin-top: 20px;
+      border-radius: 12px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>RICE TYPE CLASSIFICATION</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Testimonials</a>
+      <a href="#">Contact</a>
+      <a href="#" style="color:#00c853;">Predict</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="breadcrumb">Home / Details Page</div>
+    <h2>Upload Your Image</h2>
+
+    <form method="POST" action="/predict" enctype="multipart/form-data">
+      <input type="file" name="file" accept="image/*" onchange="previewImage(event)" required>
+      <br>
+      <button type="submit">Predict</button>
+    </form>
+
+    <img id="preview" alt="Image Preview">
+    <div id="result">
+      {% if prediction %}
+        Prediction: <strong>{{ prediction }}</strong>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 Rice Classifier | All Rights Reserved</p>
+  </div>
+
+  <script>
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function(){
+        const output = document.getElementById('preview');
+        output.src = reader.result;
+        output.style.display = 'block';
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  </script>
+
+</body>
+</html>
